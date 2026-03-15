@@ -29,7 +29,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Booking System | Add Sub admin</title>
+  <title>CAF PC POINT | Add Sub Admin</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -55,7 +55,7 @@ error:function (){}
 </script>
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-collapse">
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
@@ -117,7 +117,7 @@ error:function (){}
 <!-- Sub admin Contact Number---->
                   <div class="form-group">
                     <label for="text">Mobile Number</label>
-                    <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Enter email" pattern="[0-9]{10}" title="10 numeric characters only" required>
+                    <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Enter mobile number" required>
                   </div>
 
 <!---Password--->

@@ -27,7 +27,7 @@ echo "<script>alert('Something went wron. Please try again.');</script>";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Restaurent Table Booking System | Add Sub admin</title>
+  <title>CAF PC POINT | Reset Sub Admin Password</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -51,7 +51,7 @@ return true;
 </script>
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-collapse">
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>

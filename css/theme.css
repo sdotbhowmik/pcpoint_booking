@@ -1,0 +1,21 @@
+.contact-section {
+    background-color: var(--bg-light);
+}
+
+.software-ad-section {
+    background-color: var(--bg-light);
+}
+
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-link {
+    color: #333333 !important;
+}
+
+.footer {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}

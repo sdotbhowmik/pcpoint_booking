@@ -1,4 +1,15 @@
-<?php include_once('admin/includes/config.php');
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$default_lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['lang']) ? $_SESSION['lang'] : 'it');
+$allowed_langs = ['en', 'it', 'bn'];
+if (!in_array($default_lang, $allowed_langs)) $default_lang = 'en';
+$_SESSION['lang'] = $default_lang;
+
+$lang_names = ['en' => 'English', 'it' => 'Italiano', 'bn' => 'বাংলা'];
+
+include_once('admin/includes/config.php');
 
 if(isset($_POST['submit'])){
 
@@ -10,7 +21,6 @@ $bookingtime=$_POST['bookingtime'];
 $noadults=$_POST['noadults'];
 $nochildrens=$_POST['nochildrens'];
 $bno=mt_rand(100000000,9999999999);
-//Code for Insertion
 $query=mysqli_query($con,"insert into tblbookings(bookingNo,fullName,emailId,phoneNumber,bookingDate,bookingTime,noAdults,noChildrens) values('$bno','$fname','$emailid','$phonenumber','$bookingdate','$bookingtime','$noadults','$nochildrens')");
 if($query){
 echo '<script>alert("Your order sent successfully. Booking number is "+"'.$bno.'")</script>';
@@ -20,265 +30,221 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 }
 
 }
-
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAF PC POINT - Appointment Booking Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-	
-	<script type="application/x-javascript">
-		addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
-	</script>
-	
-	
-	
-	<!--//style sheet end here-->
-	<!-- Calendar -->
-	<link rel="stylesheet" href="css/jquery-ui.css" />
-	<!-- //Calendar -->
-	<link href="css/wickedpicker.css" rel="stylesheet" type='text/css' media="all" />
-	<!-- Time-script-CSS -->
+<?php include 'includes/header.php'; ?>
 
-	<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-	
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .navbar {
-            background-color: #f5f5f5;
-        }
-        .navbar-brand {
-            font-weight: bold;
-            color: #bb2d3b;
-        }
-        .nav-link {
-            position: relative;
-        }
-        .nav-link:hover::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 6px;
-            background-color: #bb2d3b;
-        }
-        .hero {
-            background: linear-gradient(135deg, #7d65d8, #9ba8ff);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .service-card {
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 15px;
-            transition: transform 0.2s;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .btn-primary {
-            background-color: #4b4cf7;
-            border-color: #4b4cf7;
-        }
-        .btn-primary:hover {
-            background-color: #3c3ccd;
-        }
-        footer {
-            background-color: #000;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-		
-        .vision-section {
-            padding: 40px 20px;
-            background-color: #f5f5f5;
-        }
-        .vision-section .ceo-image {
-            max-width: 100%;
-            border-radius: 50%;
-        }
-        .slider {
-            margin: 40px 0;
-        }
-        .slider img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-        .slider-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .operational-section {
-            padding: 40px 20px;
-            background-color: #f9f9f9;
-        }
-        .operational-card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-        }
-        .location-section {
-            padding: 40px 20px;
-            background-color: #f5f5f5;
-        }
-		
-		
-        .form-select {
-            background-color: #fff;
-            border-color: #ced4da;
-            color: #495057;
-            padding: 0.375rem 0.75rem;
-            font-size: 1rem;
-            line-height: 1.5;
-            height: calc(2.25rem + 2px);
-            border-radius: 0.375rem;
-        }
-
-        .form-select:focus {
-            border-color: #80bdff;
-            outline: none;
-            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-        }
-
-        /* To make it look like other input fields */
-        .form-select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-		
-    </style>
-</head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <?php include 'includes/navbar.php'; ?>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
         <div class="container">
-            <a class="navbar-brand" href="index.php">CAF PC-POINT</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="partners.php">Partners</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Brances</a></li>
-                    <li class="nav-item"><a class="nav-link" href="book.php">Book Now</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://app.titan.email/login/" target="_blank">Web Mail</a></li>
-                    <li class="nav-item"><a class="btn btn-danger" href="admin/index.php" target="_blank">Login</a></li>
-                </ul>
+            <div class="hero-content">
+                <h1 class="hero-title" data-translate="book_your_appointment">Book Your Appointment</h1>
+                <p class="hero-subtitle" data-translate="schedule_visit">Schedule a visit with our professional team</p>
             </div>
         </div>
-    </nav>
-
-
+    </section>
 
     <!-- Booking Form Section -->
-    <div class="container mt-4">
-        <h1 class="text-center">Book Your Appointment</h1>
-        <div class="card p-4 mt-3">
-            <form action="#" method="post">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" name="name" placeholder="Name" required>
+    <section class="booking-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="booking-card">
+                        <div class="booking-header">
+                            <h3><i class="fas fa-calendar-check me-2"></i><span data-translate="appointment_form">Appointment Form</span></h3>
+                            <p data-translate="fill_details">Fill in your details to book an appointment</p>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                        <div class="booking-body">
+                            <form action="#" method="post">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="full_name">Full Name</label>
+                                            <input type="text" class="form-control" name="name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="email_id">Email ID</label>
+                                            <input type="email" class="form-control" name="email" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="phone_number">Phone Number</label>
+                                            <input type="text" class="form-control" name="phonenumber" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="select_service">Select Service</label>
+                                            <select class="form-select" name="service" required>
+                                                <option value="">Select Service</option>
+                                                <option value="CAF">CAF</option>
+                                                <option value="PATRONATO">Patronato</option>
+                                                <option value="TAX">Tax Services</option>
+                                                <option value="IMMIGRAZIONE">Immigrazione</option>
+                                                <option value="PAGAMENTO">Pagamento</option>
+                                                <option value="AVVOCATO">Avvocato</option>
+                                                <option value="ARCHIVIO">Archivio</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="booking_date">Booking Date</label>
+                                            <input type="date" class="form-control" name="bookingdate" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="booking_time">Booking Time</label>
+                                            <input type="time" class="form-control" name="bookingtime" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="number_of_adults">Number of Adults</label>
+                                            <input type="number" class="form-control" name="noadults" min="1" value="1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" data-translate="number_of_children">Number of Children</label>
+                                            <input type="number" class="form-control" name="nochildrens" min="0" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn w-100" name="submit" style="background: var(--primary); border-color: var(--primary); color: #fff; padding: 16px 32px; font-weight: 700; border-radius: 8px; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 6px 20px rgba(34, 139, 34, 0.3);">
+                                        <i class="fas fa-check-circle me-2"></i><span data-translate="confirm_booking">Confirm Booking</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" name="nochildrens" placeholder="Tax ID" required>
-                        </div>
+                <div class="col-lg-4">
+                    <div class="info-box">
+                        <h5><i class="fas fa-info-circle me-2"></i><span data-translate="contact_information">Contact Information</span></h5>
+                        <p><i class="fas fa-map-marker-alt"></i> Via Flavio Stilicone 11, 00175 Roma</p>
+                        <p><i class="fas fa-phone"></i> +39 068 788 0399</p>
+                        <p><i class="fas fa-envelope"></i> info@cafpcpoint.it</p>
                     </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input type="text" class="form-control" name="phonenumber" placeholder="Phone Number" required>
-                        </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-clock me-2"></i><span data-translate="working_hours">Working Hours</span></h5>
+                        <p><i class="fas fa-calendar-day"></i> Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        <p><i class="fas fa-calendar-week"></i> Saturday: 10:00 AM - 4:00 PM</p>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input id="datepicker" name="bookingdate" type="text" class="form-control" placeholder="Booking Date" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <input type="text" id="timepicker" name="bookingtime" class="form-control timepicker" placeholder="Time" required onkeypress="return false;">
-                        </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-question-circle me-2"></i><span data-translate="need_help">Need Help?</span></h5>
+                        <p data-translate="contact_for_questions">Contact us for any questions about our services.</p>
+                        <a href="check-status.php" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-search me-1"></i><span data-translate="check_booking_status">Check Booking Status</span>
+                        </a>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <select class="form-control" name="noadults" required>
-                        <option value="">Select Service Category</option>
-                        <option value="CAF - CENTRO ASSISTENZA FISCAL">CAF - CENTRO ASSISTENZA FISCAL</option>
-                        <option value="CONSULENZA DEL LAVORO">CONSULENZA DEL LAVORO</option>
-                        <option value="PATRONATO">PATRONATO</option>
-                        <option value="IMMIGRAZIONE">IMMIGRAZIONE</option>
-                        <option value="IMPRESA - COMMERCIALISTA">IMPRESA - COMMERCIALISTA</option>
-                        <option value="SERVIZI VARI">SERVIZI VARI</option>
-                        <option value="PAGAMENTO">PAGAMENTO</option>
-                        <option value="AVVOCATO">AVVOCATO</option>
-                        <option value="ARCHIVIO">ARCHIVIO</option>
-                    </select>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-success w-100" name="submit">Confirm Booking</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-	
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2025 CAF PC POINT | VIA FLAVIO STILICONE 11, 00175 ROMA.</p>
-    </footer>
-	
-	
-	
+    <?php include 'includes/footer.php'; ?>
 
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker();
+        });
+    </script>
+    <script type="text/javascript" src="js/wickedpicker.js"></script>
+    <script type="text/javascript">
+        $('.timepicker,.timepicker1').wickedpicker({ twentyFour: false });
+    </script>
+    <script>
+    const translations = {
+        'en': {
+            'book_your_appointment': 'Book Your Appointment',
+            'schedule_visit': 'Schedule a visit with our professional team',
+            'appointment_form': 'Appointment Form',
+            'fill_details': 'Fill in your details to book an appointment',
+            'full_name': 'Full Name',
+            'email_id': 'Email ID',
+            'phone_number': 'Phone Number',
+            'booking_date': 'Booking Date',
+            'booking_time': 'Booking Time',
+            'select_service': 'Select Service',
+            'number_of_adults': 'Number of Adults',
+            'number_of_children': 'Number of Children',
+            'confirm_booking': 'Confirm Booking',
+            'contact_information': 'Contact Information',
+            'working_hours': 'Working Hours',
+            'need_help': 'Need Help?',
+            'contact_for_questions': 'Contact us for any questions about our services.',
+            'check_booking_status': 'Check Booking Status'
+        },
+        'it': {
+            'book_your_appointment': 'Prenota il tuo appuntamento',
+            'schedule_visit': 'Pianifica una visita con il nostro team professionale',
+            'appointment_form': 'Modulo di Appuntamento',
+            'fill_details': 'Compila i tuoi dettagli per prenotare un appuntamento',
+            'full_name': 'Nome Completo',
+            'email_id': 'Email',
+            'phone_number': 'Numero di Telefono',
+            'booking_date': 'Data di Prenotazione',
+            'booking_time': 'Orario di Prenotazione',
+            'select_service': 'Seleziona Servizio',
+            'number_of_adults': 'Numero di Adulti',
+            'number_of_children': 'Numero di Bambini',
+            'confirm_booking': 'Conferma Prenotazione',
+            'contact_information': 'Informazioni di Contatto',
+            'working_hours': 'Orari di Lavoro',
+            'need_help': 'Hai bisogno di aiuto?',
+            'contact_for_questions': 'Contattaci per qualsiasi domanda sui nostri servizi.',
+            'check_booking_status': 'Stato Prenotazione'
+        },
+        'bn': {
+            'book_your_appointment': 'আপনার অ্যাপয়েন্টমেন্ট বুক করুন',
+            'schedule_visit': 'আমাদের পেশাদার টিমের সাথে একটি সাক্ষাৎ নির্ধারণ করুন',
+            'appointment_form': 'অ্যাপয়েন্টমেন্ট ফর্ম',
+            'fill_details': 'অ্যাপয়েন্টমেন্ট বুক করতে আপনার বিবরণ পূরণ করুন',
+            'full_name': 'পূর্ণ নাম',
+            'email_id': 'ইমেইল আইডি',
+            'phone_number': 'ফোন নম্বর',
+            'booking_date': 'বুকিং তারিখ',
+            'booking_time': 'বুকিং সময়',
+            'select_service': 'সেবা নির্বাচন করুন',
+            'number_of_adults': 'প্রাপ্তবয়স্কের সংখ্যা',
+            'number_of_children': 'শিশুর সংখ্যা',
+            'confirm_booking': 'বুকিং নিশ্চিত করুন',
+            'contact_information': 'যোগাযোগ তথ্য',
+            'working_hours': 'কর্মঘণ্টা',
+            'need_help': 'সাহায্য প্রয়োজন?',
+            'contact_for_questions': 'আমাদের সেবা সম্পর্কে যেকোনো প্রশ্নের জন্য যোগাযোগ করুন।',
+            'check_booking_status': 'বুকিং স্ট্যাটাস দেখুন'
+        }
+    };
 
+    function translatePage(lang) {
+        document.querySelectorAll('[data-translate]').forEach(function(el) {
+            const key = el.getAttribute('data-translate');
+            if (translations[lang] && translations[lang][key]) {
+                el.textContent = translations[lang][key];
+            }
+        });
+    }
 
-	<!-- js -->
-	<script type='text/javascript' src='js/jquery-2.2.3.min.js'></script>
-	<!-- //js -->
-	<!-- Calendar -->
-	<script src="js/jquery-ui.js"></script>
-	<script>
-		$(function () {
-			$("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker();
-		});
-	</script>
-	<!-- //Calendar -->
-	<!-- Time -->
-	<script type="text/javascript" src="js/wickedpicker.js"></script>
-	<script type="text/javascript">
-		$('.timepicker,.timepicker1').wickedpicker({ twentyFour: false });
-	</script>
-	<!-- //Time -->
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    const currentLang = '<?php echo $default_lang; ?>';
+    translatePage(currentLang);
+    </script>
 </body>
 </html>

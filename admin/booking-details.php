@@ -41,7 +41,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Booking System  | Booking Details</title>
+  <title>CAF PC POINT | Booking Details</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -54,7 +54,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-collapse">
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
@@ -203,7 +203,7 @@ while($result=mysqli_fetch_array($query)){
             <input type="hidden" name="bdate" value="<?php echo $date;?>">
             <input type="hidden" name="btime" value="<?php echo $btime;?>">
             <select class="form-control" name="table" id="table">
-            <option value="">Select Stuff</option>
+            <option value="">Select Service Point</option>
             <?php $ret=mysqli_query($con,"select id,tableNumber from tblrestables");
 while($row=mysqli_fetch_array($ret)){
 ?>

@@ -1,0 +1,3 @@
+[Known issue]
+- Hover text is not visble for submenus of admin panel
+- admin -> Manage Service Points -> Unable to featch data for its table

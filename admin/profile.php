@@ -27,7 +27,7 @@ echo "<script>alert('Something went wron. Please try again.');</script>";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Booking System  | My Profile</title>
+  <title>CAF PC POINT | My Profile</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -39,7 +39,7 @@ echo "<script>alert('Something went wron. Please try again.');</script>";
 
 
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-collapse">
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
@@ -105,13 +105,13 @@ while($result=mysqli_fetch_array($query)){
 <!--  admin Contact Number---->
                   <div class="form-group">
                     <label for="text">Mobile Number</label>
-                    <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Enter email" pattern="[0-9]{10}" title="10 numeric characters only" maxlength="10" required value="<?php echo $result['MobileNumber'];?>">
+                    <input type="text" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Enter mobile number" required value="<?php echo $result['MobileNumber'];?>">
                   </div>
 
 <!--  admin Profile Reg. Date---->
                   <div class="form-group">
                     <label for="text">Registration Date</label>
-                    <input type="text" class="form-control" id="regdate" name="regdate"  required value="<?php echo $result['AdminRegdate'];?>" readonly>
+                    <input type="text" class="form-control" id="regdate" name="regdate"  required value="<?php echo $result['CreationDate'];?>" readonly>
                   </div>
 
 

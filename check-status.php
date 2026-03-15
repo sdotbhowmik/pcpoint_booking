@@ -1,103 +1,62 @@
-<?php include_once('admin/includes/config.php');
-
-if(isset($_POST['submit'])){
-
-$fname=$_POST['name'];
-$emailid=$_POST['email'];
-$phonenumber=$_POST['phonenumber'];
-$bookingdate=$_POST['bookingdate'];
-$bookingtime=$_POST['bookingtime'];
-$noadults=$_POST['noadults'];
-$nochildrens=$_POST['nochildrens'];
-$bno=mt_rand(100000000,9999999999);
-//Code for Insertion
-$query=mysqli_query($con,"insert into tblbookings(bookingNo,fullName,emailId,phoneNumber,bookingDate,bookingTime,noAdults,noChildrens) values('$bno','$fname','$emailid','$phonenumber','$bookingdate','$bookingtime','$noadults','$nochildrens')");
-if($query){
-echo '<script>alert("Your order sent successfully. Booking number is "+"'.$bno.'")</script>';
-echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-} else {
-echo "<script>alert('Something went wrong. Please try again.');</script>";
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
+$default_lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['lang']) ? $_SESSION['lang'] : 'it');
+$allowed_langs = ['en', 'it', 'bn'];
+if (!in_array($default_lang, $allowed_langs)) $default_lang = 'it';
+$_SESSION['lang'] = $default_lang;
 
-}
-
+$lang_names = ['en' => 'English', 'it' => 'Italiano', 'bn' => 'বাংলা'];
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-	<title>Restaurent Table Booking System</title>
-	<!-- Meta tags -->
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="keywords" content=""
-	/>
-	<script type="application/x-javascript">
-		addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
-	</script>
-	<!-- Meta tags -->
-	<!--stylesheets-->
-	<link href="css/style.css" rel='stylesheet' type='text/css' media="all">
-	<!--//style sheet end here-->
-	<!-- Calendar -->
-	<link rel="stylesheet" href="css/jquery-ui.css" />
-	<!-- //Calendar -->
-	<link href="css/wickedpicker.css" rel="stylesheet" type='text/css' media="all" />
-	<!-- Time-script-CSS -->
-
-	<link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-</head>
+<?php include 'includes/header.php'; ?>
 
 <body>
-	<h1 class="header-w3ls">
-		RTBS | Check Status</h1>
-	<div class="appointment-w3">
-		<form action="search-result.php" method="post">
-			<div class="personal">
-			
-				<div class="main">
-					<div class="form-left-w3l">
+    <?php include 'includes/navbar.php'; ?>
 
-						<input type="text" class="top-up" name="searchdata" placeholder="Search by booking no or contact no" required="">
-					</div>
-		
-				
-			</div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Check Booking Status</h1>
+                <p class="hero-subtitle">Track your appointment status easily</p>
+            </div>
+        </div>
+    </section>
 
-			
-			
-			<div class="btnn">
-				<input type="submit" value="Search" name="submit">
-			</div>
-					<div class="copy">
-		<p>Check Booking <a href="check-status.php" target="_blank">Status</a></p>
-	</div>
-		<div class="copy">
-		<p>Admin Panel<a href="admin/" target="_blank"> Login here</a></p>
-	</div>
-		</form>
-	</div>
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-card">
+                <div class="search-header">
+                    <div class="icon-box">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Search Your Booking</h3>
+                    <p>Enter your booking number or phone number</p>
+                </div>
+                <div class="search-body">
+                    <form action="search-result.php" method="post">
+                        <div class="mb-4">
+                            <label class="form-label">Booking Number / Phone Number</label>
+                            <input type="text" class="form-control" name="searchdata" placeholder="Enter booking number or phone number" required>
+                        </div>
+                        <button type="submit" class="btn-search" name="submit">
+                            <i class="fas fa-search me-2"></i>Search
+                        </button>
+                    </form>
+                    <div class="quick-links">
+                        <p>Need to make a new booking? <a href="book.php">Book Now</a></p>
+                        <p>Back to <a href="index.php">Home</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
+    <?php include 'includes/footer.php'; ?>
 
-
-	<!-- js -->
-	<script type='text/javascript' src='js/jquery-2.2.3.min.js'></script>
-	<!-- //js -->
-	<!-- Calendar -->
-	<script src="js/jquery-ui.js"></script>
-	<script>
-		$(function () {
-			$("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker();
-		});
-	</script>
-	<!-- //Calendar -->
-	<!-- Time -->
-	<script type="text/javascript" src="js/wickedpicker.js"></script>
-	<script type="text/javascript">
-		$('.timepicker,.timepicker1').wickedpicker({ twentyFour: false });
-	</script>
-	<!-- //Time -->
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

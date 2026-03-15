@@ -28,7 +28,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Booking System  | Add Stuff</title>
+  <title>CAF PC POINT | Add Service Point</title>
 
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
 
@@ -45,7 +45,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-collapse">
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
@@ -61,12 +61,12 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Stuff</h1>
+            <h1>Add Service Point</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-              <li class="breadcrumb-item active">Add Stuff</li>
+              <li class="breadcrumb-item active">Add Service Point</li>
             </ol>
           </div>
         </div>
@@ -82,7 +82,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Stuff Details</h3>
+                <h3 class="card-title">Service Point Details</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -91,8 +91,8 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 
 <!--  Table No--->
    <div class="form-group">
-                    <label for="exampleInputFullname">Stuff Name</label>
-                    <input type="text" class="form-control" id="tableno" name="tableno" placeholder="Enter Stuff Name" required>
+                    <label for="exampleInputFullname">Service Point Name</label>
+                    <input type="text" class="form-control" id="tableno" name="tableno" placeholder="Enter Service Point Name" required>
                   </div>
 
 

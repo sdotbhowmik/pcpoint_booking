@@ -26,7 +26,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Booking System | Manage Sub Admins</title>
+  <title>CAF PC POINT | Manage Sub Admins</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -39,7 +39,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-collapse">
 <div class="wrapper">
   <!-- Navbar -->
 <?php include_once("includes/navbar.php");?>
@@ -104,7 +104,7 @@ while($result=mysqli_fetch_array($query)){
                     <td><?php echo $result['AdminName']?></td>
                    <td><?php echo $result['Email']?></td>
                     <td><?php echo $result['MobileNumber']?></td>
-                    <td><?php echo $result['AdminRegdate']?></td>
+                    <td><?php echo $result['CreationDate']?></td>
                     <th>
      <a href="edit-subadmin.php?said=<?php echo $result['ID'];?>" title="Edit Sub Admin Details"> <i class="fa fa-edit" aria-hidden="true"></i> </a>
      <a href="manage-subadmins.php?action=delete&&said=<?php echo $result['ID']; ?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
