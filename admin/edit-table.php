@@ -7,44 +7,33 @@ if(strlen($_SESSION['aid'])==0)
 header('location:index.php');
 }
 else{
-// Code for Add New Table
-if(isset($_POST['submit'])){
-//Getting Post Values  
+// Code for Update Table Details
+if(isset($_POST['update'])){
 $tno=$_POST['tableno'];
-$addedby=$_SESSION['aid'];
-$adminname=$_SESSION['uname'];
-$query=mysqli_query($con,"insert into tblrestables(tableNumber,AddedBy,AdminName) values('$tno','$addedby','$adminname')");
+$tid=intval($_GET['tid']);
+$query=mysqli_query($con,"update tblrestables set tableNumber='$tno' where id='$tid'");
 if($query){
-echo "<script>alert('Table added successfully.');</script>";
-echo "<script type='text/javascript'> document.location = 'add-table.php'; </script>";
+echo "<script>alert('Service point updated successfully.');</script>";
+echo "<script type='text/javascript'> document.location = 'manage-tables.php'; </script>";
 } else {
 echo "<script>alert('Something went wrong. Please try again.');</script>";
 }
 }
-
-
-  ?>
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CAF PC POINT | Add Service Point</title>
+  <title>CAF PC POINT | Edit Service Point</title>
 
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
-
-  <link rel="stylesheet" href="../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-  <!-- BS Stepper -->
-  <link rel="stylesheet" href="../plugins/bs-stepper/css/bs-stepper.min.css">
-  <!-- dropzonejs -->
-  <link rel="stylesheet" href="../plugins/dropzone/min/dropzone.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+
 </head>
 <body class="hold-transition sidebar-collapse">
 <div class="wrapper">
@@ -62,18 +51,24 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Add Service Point</h1>
+            <h1>Edit Service Point</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-              <li class="breadcrumb-item active">Add Service Point</li>
+              <li class="breadcrumb-item"><a href="manage-tables.php">Manage Service Points</a></li>
+              <li class="breadcrumb-item active">Edit Service Point</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-
+<?php 
+$tid=intval($_GET['tid']);
+$query=mysqli_query($con,"select * from tblrestables where id='$tid'");
+$cnt=1;
+while($result=mysqli_fetch_array($query)){
+?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -83,46 +78,41 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Service Point Details</h3>
+                <h3 class="card-title">Update Service Point Info</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form name="addlawyer" method="post" enctype="multipart/form-data">
+              <form name="edittable" method="post">
                 <div class="card-body">
-
-<!--  Table No--->
-   <div class="form-group">
-                    <label for="exampleInputFullname">Service Point Name</label>
-                    <input type="text" class="form-control" id="tableno" name="tableno" placeholder="Enter Service Point Name" required>
+                  <div class="form-group">
+                    <label for="exampleInputTableNo">Service Point Name / Number</label>
+                    <input type="text" class="form-control" id="tableno" name="tableno" placeholder="Enter Service Point Name" required value="<?php echo $result['tableNumber'];?>">
                   </div>
+                  <div class="form-group">
+                    <label>Added By</label>
+                    <input type="text" class="form-control" value="<?php echo $result['AdminName'];?>" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label>Creation Date</label>
+                    <input type="text" class="form-control" value="<?php echo $result['creationDate'];?>" readonly>
+                  </div>
+       
+                <?php } ?>
 
-
-
-
-
-
-  <div class="card-footer">
-                  <button type="submit" class="btn btn-primary" name="submit" id="submit">Submit</button>
-                </div>
-      
                 </div>
                 <!-- /.card-body -->
-          
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" name="update" id="update">Update</button>
+                  <a href="manage-tables.php" class="btn btn-default">Cancel</a>
+                </div>
+              </form>
             </div>
             <!-- /.card -->
+
+         
+       
           </div>
           <!--/.col (left) -->
-
-
-
-
-
-
-
-
-    
-              </form>
-       
   
         </div>
         <!-- /.row -->
@@ -140,28 +130,8 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- bs-custom-file-input -->
-<script src="../plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
-<!-- Page specific script -->
-<script src="../plugins/select2/js/select2.full.min.js"></script>
-<script>
-$(function () {
-  bsCustomFileInput.init();
-});
-  $(function () {
-    //Initialize Select2 Elements
-    $('.select2').select2()
-
-    //Initialize Select2 Elements
-    $('.select2bs4').select2({
-      theme: 'bootstrap4'
-    })
-});
-</script>
 </body>
 </html>
 <?php } ?>

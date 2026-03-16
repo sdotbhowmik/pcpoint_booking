@@ -272,26 +272,26 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-/* Submenu hover fix - white background, black text */
+/* Submenu hover fix - white background, keep original gray text color */
 .sidebar-dark-primary .nav-treeview > .nav-item > .nav-link:hover,
 .sidebar-dark-primary .nav-treeview > .nav-item > .nav-link:focus {
   background-color: #ffffff !important;
-  color: #000000 !important;
+  color: #343a40 !important;
 }
 
 .sidebar-dark-primary .nav-treeview .nav-link:hover,
 .sidebar-dark-primary .nav-treeview .nav-link:focus {
   background-color: #ffffff !important;
-  color: #000000 !important;
+  color: #343a40 !important;
 }
 
 .sidebar-dark-primary .nav-treeview .nav-link:hover .nav-icon,
 .sidebar-dark-primary .nav-treeview .nav-link:focus .nav-icon {
-  color: #000000 !important;
+  color: #343a40 !important;
 }
 
 .sidebar-dark-primary .nav-treeview .nav-link:hover p,
 .sidebar-dark-primary .nav-treeview .nav-link:focus p {
-  color: #000000 !important;
+  color: #343a40 !important;
 }
 </style>

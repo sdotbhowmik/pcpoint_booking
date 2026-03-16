@@ -94,8 +94,7 @@ echo "<script>alert('Something went wrong. Please try again.');</script>";
                   </tr>
                   </thead>
                   <tbody>
-<?php $query=mysqli_query($con,"select AdminName,tblrestables.id as tid,tblrestables.tableNumber,tblrestables.creationDate from tblrestables
-left join tbladmin on tbladmin.ID=tblrestables.AddedBy");
+<?php $query=mysqli_query($con,"select id, tableNumber, AdminName, creationDate from tblrestables order by id desc");
 $cnt=1;
 while($result=mysqli_fetch_array($query)){
 ?>
@@ -106,7 +105,8 @@ while($result=mysqli_fetch_array($query)){
                     <td><?php echo $result['AdminName']?></td>
                    <td><?php echo $result['creationDate']?></td>
                     <th> 
-     <a href="manage-tables.php?action=delete&&tid=<?php echo $result['tid']; ?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
+     <a href="edit-table.php?tid=<?php echo $result['id']; ?>" title="Edit this record"><i class="fa fa-edit" aria-hidden="true"></i></a>&nbsp;&nbsp;
+<a href="manage-tables.php?action=delete&&tid=<?php echo $result['id']; ?>" style="color:red;" title="Delete this record" onclick="return confirm('Do you really want to delete this record?');"><i class="fa fa-trash" aria-hidden="true"></i> </a>
  </th>
                   </tr>
          <?php $cnt++;} ?>
