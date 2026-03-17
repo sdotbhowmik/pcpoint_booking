@@ -1,13 +1,7 @@
 <?php
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "cafpcpointdb";
+require_once __DIR__ . '/../admin/includes/config.php';
 
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-if($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+$conn = $con;
 $conn->set_charset("utf8mb4");
 
 function runQuery($sql, $params = []) {

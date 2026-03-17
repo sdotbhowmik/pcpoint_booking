@@ -1,35 +1,23 @@
 <?php 
-// Direct database connection for footer
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "cafpcpointdb";
+require_once __DIR__ . '/db.php';
 
-$footer_conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 $footer = null;
-
-$result = $footer_conn->query("SELECT * FROM tblfooter_content ORDER BY id DESC LIMIT 1");
+$result = $conn->query("SELECT * FROM tblfooter_content ORDER BY id DESC LIMIT 1");
 if ($result && $result->num_rows > 0) {
     $footer = $result->fetch_assoc();
 }
-$footer_conn->close();
 
-// Get social links
-$social_conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
 $socials = [];
-$social_result = $social_conn->query("SELECT * FROM tblsocial WHERE is_active = 1 ORDER BY id ASC");
+$social_result = $conn->query("SELECT * FROM tblsocial WHERE is_active = 1 ORDER BY id ASC");
 if ($social_result && $social_result->num_rows > 0) {
     $socials = $social_result->fetch_all(MYSQLI_ASSOC);
 }
-$social_conn->close();
 
 $site_name = 'CAF PC POINT';
-$setting_conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-$setting_result = $setting_conn->query("SELECT setting_value FROM tblsettings WHERE setting_key = 'site_name' LIMIT 1");
+$setting_result = $conn->query("SELECT setting_value FROM tblsettings WHERE setting_key = 'site_name' LIMIT 1");
 if ($setting_result && $setting_result->num_rows > 0) {
     $site_name = $setting_result->fetch_assoc()['setting_value'];
 }
-$setting_conn->close();
 
 $default_lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['lang']) ? $_SESSION['lang'] : 'it');
 ?>
@@ -97,6 +85,4 @@ $default_lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_SESSION['lang'])
     </div>
 </footer>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/main.js"></script>

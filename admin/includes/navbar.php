@@ -1,6 +1,12 @@
 <?php
-require_once(__DIR__ . '/config.php');
-$base_path = '/pcpoint_booking/admin';
+if (!isset($base_path)) {
+    $host = $_SERVER['HTTP_HOST'];
+    if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
+        $base_path = '/pcpoint_booking/admin';
+    } else {
+        $base_path = '/admin';
+    }
+}
 ?>
 <nav class="main-header navbar navbar-expand-md navbar-dark navbar-dark">
   <!-- Brand Logo -->

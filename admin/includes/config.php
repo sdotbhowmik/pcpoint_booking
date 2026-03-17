@@ -1,5 +1,13 @@
 <?php
 date_default_timezone_set('Europe/Rome');
+
+$host = $_SERVER['HTTP_HOST'];
+if (strpos($host, 'localhost') !== false || strpos($host, '127.0.0.1') !== false) {
+    $base_path = '/pcpoint_booking/admin';
+} else {
+    $base_path = '/admin';
+}
+
 $con=mysqli_connect("localhost","root","","cafpcpointdb");
 if(mysqli_connect_errno()){
 echo "Connection Fail".mysqli_connect_error();

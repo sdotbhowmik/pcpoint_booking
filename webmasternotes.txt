@@ -1,3 +1,0 @@
-[Known issue]
-- Hover text is not visible when hover over submenus of admin panel
-- admin -> Manage Service Points (manage-tables.php) -> Unable to fetch data for its table from DB.
